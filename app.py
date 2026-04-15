@@ -9,16 +9,59 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.colors import HexColor
 import io
 import datetime
+import json
 
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
+def load_lab_data():
+    with open("lab_data.json") as f:
+        return json.load(f)
+
+def retrieve_relevant_info(results_text, lab_data):
+    results_text_lower = results_text.lower()
+    matched_info = []
+
+    for item in lab_data:
+        for alias in item["aliases"]:
+            if alias in results_text_lower:
+                matched_info.append(item)
+                break
+
+    return matched_info
+
 def explain_blood_results(results_text):
+    lab_data = load_lab_data()
+    retrieved_info = retrieve_relevant_info(results_text, lab_data)
+
+    if not retrieved_info:
+        context = """
+No specific reference data was matched.
+
+Use general medical knowledge, but be cautious.
+Avoid making assumptions about normal ranges.
+Encourage the user to seek professional advice.
+"""
+    else:
+        context = "\n\n".join([
+            f"""
+    Test: {item['test']}
+    Normal range: {item['range']}
+    If low: {item['low']}
+    If high: {item['high']}
+    """
+            for item in retrieved_info
+        ])
     prompt = """
 You are a helpful medical assistant explaining blood test results to a patient.
 
-The patient has shared the following blood test results:
-""" + results_text + """
+Use the reference information below to guide your explanation. Do not ignore it.
+
+REFERENCE DATA:
+{context}
+
+PATIENT RESULTS:
+{results_text}
 
 Please:
 1. Explain what each value means in plain English

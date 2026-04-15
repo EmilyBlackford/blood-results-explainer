@@ -1,0 +1,23 @@
+[
+  {
+    "test": "haemoglobin",
+    "aliases": ["hb", "haemoglobin"],
+    "range": "115–160 g/L (female), 130–180 g/L (male)",
+    "low": "May indicate anaemia, bleeding, or chronic disease",
+    "high": "May indicate dehydration or polycythaemia"
+  },
+  {
+    "test": "white cell count",
+    "aliases": ["wcc", "white cell count", "white blood cells"],
+    "range": "4–11 x10^9/L",
+    "low": "May indicate bone marrow suppression or infection",
+    "high": "Often indicates infection, inflammation, or stress"
+  },
+  {
+    "test": "platelets",
+    "aliases": ["platelets", "plt"],
+    "range": "150–400 x10^9/L",
+    "low": "May increase bleeding risk",
+    "high": "May indicate inflammation or bone marrow conditions"
+  }
+]

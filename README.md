@@ -1,4 +1,4 @@
-# 🩺 Blood Results Explainer
+# 🩸 Blood Results Explainer 🩸
 
 A Python web application that explains blood test results in plain, patient-friendly English using AI.
 
@@ -60,7 +60,7 @@ Platelets: 450 x10^9/L
 Ferritin: 6 ug/L
 CRP: 28 mg/L
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 This tool is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional regarding your blood test results.
 

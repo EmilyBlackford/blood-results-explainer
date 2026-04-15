@@ -190,9 +190,21 @@ st.set_page_config(page_title="Blood Results Explainer", page_icon="🩺")
 st.title("🩺 Blood Results Explainer")
 st.markdown("Paste your blood test results below and get a clear, plain-English explanation.")
 
+# Sample results button
+def load_sample_results():
+    try:
+        with open("example_blood_results.txt", "r") as f:
+            return f.read()
+    except FileNotFoundError:
+        return "Sample results file not found."
+
+if st.button("Load sample results"):
+    st.session_state["sample"] = load_sample_results()
+
 results_input = st.text_area(
     "Your blood test results",
     height=200,
+    value=st.session_state.get("sample", ""),
     placeholder="e.g.\nHaemoglobin: 98 g/L\nWhite Cell Count: 11.8 x10^9/L\nPlatelets: 450 x10^9/L"
 )
 
@@ -201,13 +213,14 @@ if st.button("Explain my results"):
         st.warning("Please paste your blood test results first.")
     else:
         with st.spinner("Analysing your results..."):
-            explanation = explain_blood_results(results_input)
-        
-        st.success("Here's your explanation:")
-        st.markdown(explanation)
-
-        st.session_state["explanation"] = explanation
-        st.session_state["results"] = results_input
+            try:
+                explanation = explain_blood_results(results_input)
+                st.success("Here's your explanation:")
+                st.markdown(explanation)
+                st.session_state["explanation"] = explanation
+                st.session_state["results"] = results_input
+            except Exception as e:
+                st.error("Something went wrong calling the AI. Please check your API key and try again.")
 
 if "explanation" in st.session_state:
     pdf_buffer = generate_pdf(

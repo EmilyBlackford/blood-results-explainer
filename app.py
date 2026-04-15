@@ -15,7 +15,7 @@ load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def load_lab_data():
-    with open("lab_data.json") as f:
+    with open("lab_ranges.json") as f:
         return json.load(f)
 
 def retrieve_relevant_info(results_text, lab_data):
@@ -30,6 +30,34 @@ def retrieve_relevant_info(results_text, lab_data):
 
     return matched_info
 
+def group_by_category(retrieved_info):
+    grouped = {}
+
+    for item in retrieved_info:
+        category = item["category"]
+
+        if category not in grouped:
+            grouped[category] = []
+        grouped[category].append(item)
+
+    return grouped
+
+def format_grouped_context(grouped_data):
+    sections = []
+    for category, items in grouped_data.items():
+        section_text = f"{category.upper()}:\n"
+
+        for item in items:
+            section_text += f"""
+    - Test: {item['test']}
+      Normal range: {item['range']}
+      If low: {item['low']}
+      If high: {item['high']}
+    """
+
+        sections.append(section_text.strip())
+    return "\n\n".join(sections)
+
 def explain_blood_results(results_text):
     lab_data = load_lab_data()
     retrieved_info = retrieve_relevant_info(results_text, lab_data)
@@ -43,19 +71,13 @@ Avoid making assumptions about normal ranges.
 Encourage the user to seek professional advice.
 """
     else:
-        context = "\n\n".join([
-            f"""
-    Test: {item['test']}
-    Normal range: {item['range']}
-    If low: {item['low']}
-    If high: {item['high']}
-    """
-            for item in retrieved_info
-        ])
-    prompt = """
+        grouped = group_by_category(retrieved_info)
+        context = format_grouped_context(grouped)
+
+    prompt = f"""
 You are a helpful medical assistant explaining blood test results to a patient.
 
-Use the reference information below to guide your explanation. Do not ignore it.
+Use the reference information below to guide your explanation.
 
 REFERENCE DATA:
 {context}
@@ -64,17 +86,23 @@ PATIENT RESULTS:
 {results_text}
 
 Please:
-1. Explain what each value means in plain English
-2. Flag any results that appear abnormal (high or low)
-3. Use simple, reassuring language a non-medical person would understand
-4. Add a clear safety disclaimer at the end
+1. ONLY explain the blood test values explicitly provided
+2. Do not introduce additional tests
+3. Organise your response into:
+   - Full Blood Count
+   - Biochemistry
+   - Iron Studies
+4. Use simple, reassuring language
+5. Include a safety disclaimer
 
-Do not diagnose any conditions. Always recommend consulting a doctor.
+Do not diagnose conditions.
 """
+
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt
     )
+
     return response.text
 
 def generate_pdf(results_text, explanation_text):

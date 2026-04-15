@@ -2,22 +2,121 @@
   {
     "test": "haemoglobin",
     "aliases": ["hb", "haemoglobin"],
+    "category": "full blood count",
     "range": "115–160 g/L (female), 130–180 g/L (male)",
-    "low": "May indicate anaemia, bleeding, or chronic disease",
+    "low": "May indicate anaemia, iron deficiency, or chronic disease",
     "high": "May indicate dehydration or polycythaemia"
   },
   {
     "test": "white cell count",
     "aliases": ["wcc", "white cell count", "white blood cells"],
+    "category": "full blood count",
     "range": "4–11 x10^9/L",
-    "low": "May indicate bone marrow suppression or infection",
+    "low": "May indicate bone marrow suppression or viral infection",
     "high": "Often indicates infection, inflammation, or stress"
   },
   {
     "test": "platelets",
     "aliases": ["platelets", "plt"],
+    "category": "full blood count",
     "range": "150–400 x10^9/L",
     "low": "May increase bleeding risk",
-    "high": "May indicate inflammation or bone marrow conditions"
+    "high": "May indicate inflammation, infection, or bone marrow conditions"
+  },
+  {
+    "test": "mcv",
+    "aliases": ["mcv", "mean corpuscular volume"],
+    "category": "full blood count",
+    "range": "80–100 fL",
+    "low": "Suggests microcytic anaemia (often iron deficiency)",
+    "high": "Suggests macrocytic anaemia (e.g. B12 or folate deficiency)"
+  },
+  {
+    "test": "mch",
+    "aliases": ["mch", "mean corpuscular haemoglobin"],
+    "category": "full blood count",
+    "range": "27–33 pg",
+    "low": "Often seen in iron deficiency anaemia",
+    "high": "May be associated with macrocytosis"
+  },
+  {
+    "test": "neutrophils",
+    "aliases": ["neutrophils", "neuts"],
+    "category": "full blood count",
+    "range": "2–7.5 x10^9/L",
+    "low": "May increase risk of infection",
+    "high": "Often indicates bacterial infection, inflammation, or stress response"
+  },
+  {
+    "test": "lymphocytes",
+    "aliases": ["lymphocytes", "lymphs"],
+    "category": "full blood count",
+    "range": "1–4 x10^9/L",
+    "low": "May indicate immunosuppression or acute illness",
+    "high": "Often seen in viral infections or certain haematological conditions"
+  },
+  {
+    "test": "sodium",
+    "aliases": ["sodium", "na"],
+    "category": "biochemistry",
+    "range": "135–145 mmol/L",
+    "low": "May indicate fluid imbalance or certain medical conditions",
+    "high": "May indicate dehydration or endocrine disorders"
+  },
+  {
+    "test": "potassium",
+    "aliases": ["potassium", "k"],
+    "category": "biochemistry",
+    "range": "3.5–5.0 mmol/L",
+    "low": "May affect muscle and heart function",
+    "high": "May affect heart rhythm and requires urgent assessment if severe"
+  },
+  {
+    "test": "urea",
+    "aliases": ["urea"],
+    "category": "biochemistry",
+    "range": "2.5–7.8 mmol/L",
+    "low": "May be seen in overhydration or liver disease",
+    "high": "May indicate dehydration or impaired kidney function"
+  },
+  {
+    "test": "creatinine",
+    "aliases": ["creatinine", "creat"],
+    "category": "biochemistry",
+    "range": "60–110 umol/L",
+    "low": "Usually not clinically significant",
+    "high": "May indicate reduced kidney function"
+  },
+  {
+    "test": "crp",
+    "aliases": ["crp", "c-reactive protein"],
+    "category": "biochemistry",
+    "range": "<5 mg/L",
+    "low": "Normal",
+    "high": "Indicates inflammation or infection"
+  },
+  {
+    "test": "ferritin",
+    "aliases": ["ferritin"],
+    "category": "iron studies",
+    "range": "30–300 ug/L",
+    "low": "Strongly suggests iron deficiency",
+    "high": "May indicate inflammation or iron overload"
+  },
+  {
+    "test": "b12",
+    "aliases": ["b12", "vitamin b12"],
+    "category": "iron studies",
+    "range": "200–900 ng/L",
+    "low": "May cause anaemia and neurological symptoms",
+    "high": "Usually not clinically significant"
+  },
+  {
+    "test": "folate",
+    "aliases": ["folate", "folic acid"],
+    "category": "iron studies",
+    "range": ">4 ug/L",
+    "low": "May cause macrocytic anaemia",
+    "high": "Usually not clinically significant"
   }
 ]
